@@ -69,7 +69,7 @@ CREATE TABLE IF NOT EXISTS exact_match_source_selectors (
     update_time DATETIME NOT NULL,
 
     -- Selector fields which must exactly match a query
-    source VARCHAR(512) NOT NULL,
+    source VARCHAR(256) NOT NULL,
     environment VARCHAR(128),
     query_type VARCHAR(128), -- (reduced from 512)
 
