@@ -17,10 +17,14 @@ import javax.servlet.http.HttpServletResponseWrapper;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class RequestFilter implements Filter {
+public class RequestFilter
+    implements Filter {
   private FilterConfig filterConfig = null;
+  private CreateMultiReadHttpServeletRequest createMultiReadHttpServeletRequest =
+      new CopyCreateMultiReadServeletRequest();
 
-  public void init(FilterConfig filterConfig) throws ServletException {
+  public void init(FilterConfig filterConfig)
+      throws ServletException {
     this.filterConfig = filterConfig;
   }
 
@@ -32,7 +36,7 @@ public class RequestFilter implements Filter {
       throws IOException, ServletException {
     // We need to convert the ServletRequest to MultiReadRequest, so that we can intercept later
     MultiReadHttpServletRequest multiReadRequest =
-        new MultiReadHttpServletRequest((HttpServletRequest) request);
+        createMultiReadHttpServeletRequest.create((HttpServletRequest) request);
     HttpServletResponseWrapper responseWrapper =
         new HttpServletResponseWrapper((HttpServletResponse) response);
     chain.doFilter(multiReadRequest, responseWrapper);
